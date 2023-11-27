@@ -27,6 +27,17 @@ public class CommentController {
         return ResponseEntity.status(201).body(responseDto);
     }
 
+    // 댓글 조회
+    @GetMapping("/{commentId}")
+    public ResponseEntity<CommonResponseDto> getComment(@PathVariable Long commentId) {
+        try {
+            CommentResponseDto responseDto = commentService.getComment(commentId);
+            return ResponseEntity.ok().body(responseDto);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(new CommonResponseDto(e.getMessage(), HttpStatus.BAD_REQUEST.value()));
+        }
+    }
+
 
     // 댓글 수정(text)
     @PutMapping("/{commentId}")
